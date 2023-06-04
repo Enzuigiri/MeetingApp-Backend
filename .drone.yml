@@ -11,7 +11,7 @@ steps:
     - if docker ps -a | grep meet_api_golang
     - then
     - docker rm -f gomeetapi
-    - docker build -t gowebapi .
+    - docker build -t gomeetapi .
     - docker run -itd -p 8000:8000 --name meet_api_golang --network drone-networks gomeetapi
     - else
     - docker build -t gomeetapi .
