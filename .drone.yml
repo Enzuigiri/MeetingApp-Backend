@@ -12,10 +12,10 @@ steps:
     - then
     - docker rm -f gomeetapi
     - docker build -t gomeetapi .
-    - docker run -itd -p 8000:8000 --name meet_api_golang --network drone-networks gomeetapi
+    - docker run -itd -p 8000:8000 --name meet_api_golang --network apinetwork --ip=192.168.88.2 gomeetapi
     - else
     - docker build -t gomeetapi .
-    - docker run -itd -p 8000:8000 --name meet_api_golang --network drone-networks gomeetapi
+    - docker run -itd -p 8000:8000 --name meet_api_golang --network apinetwork --ip=192.168.88.2 gomeetapi
     - fi
     - else
     - exit 1
