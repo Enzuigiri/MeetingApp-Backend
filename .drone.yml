@@ -1,0 +1,30 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: Build
+  image: docker
+  commands:
+    - if ls | grep Dockerfile
+    - then
+    - if docker ps -a | grep meet_api_golang
+    - then
+    - docker rm -f gomeetapi
+    - docker build -t gowebapi .
+    - docker run -itd -p 8000:8000 --name meet_api_golang --network drone-networks gomeetapi
+    - else
+    - docker build -t gomeetapi .
+    - docker run -itd -p 8000:8000 --name meet_api_golang --network drone-networks gomeetapi
+    - fi
+    - else
+    - exit 1
+    - fi
+  volumes:
+    - name: docker_sock
+      path: /var/run/docker.sock
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
