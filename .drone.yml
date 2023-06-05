@@ -10,7 +10,7 @@ steps:
     - then
     - if docker ps -a | grep meet_api_golang
     - then
-    - docker rm -f gomeetapi
+    - docker rm -f meet_api_golang
     - docker build -t gomeetapi .
     - docker run -itd -p 8000:8000 --name meet_api_golang --network apinetwork --ip=192.168.88.92 gomeetapi
     - else
