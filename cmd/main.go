@@ -10,6 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
+func helloWorld(c *fiber.Ctx) error {
+	return c.SendString("Hello, World!")
+}
+
 func main() {
 	fmt.Println("Hello world")
 	app := app.NewApp()
@@ -26,6 +30,8 @@ func main() {
 	fiber := fiber.New()
 
 	fiber.Use(logger.New())
+
+	fiber.Get("/test", helloWorld)
 
 	route.Setup(env, timeout, *db, fiber, validator)
 
