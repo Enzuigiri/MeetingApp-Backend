@@ -23,20 +23,21 @@ func NewsSignupUsecase(userRepository domain.UserRepository, timeout time.Durati
 	}
 }
 
+// asdqwe!23
 func (su *signupUsecase) Create(c context.Context, user *domain.User) error {
 	ctx, cancel := context.WithTimeout(c, su.contextTimeout)
 	defer cancel()
 	return su.userRepository.Create(ctx, user)
 }
 
-func (su *signupUsecase) CodeValidation(c context.Context, clientSecret string, code string) (domain.User, error) {
+func (su *signupUsecase) CodeValidation(c context.Context, clientId string, clientSecret string, code string) (domain.User, error) {
 	ctx, cancel := context.WithTimeout(c, su.contextTimeout)
 	defer cancel()
 
 	client := apple.New()
 
 	vReq := apple.AppValidationTokenRequest{
-		ClientID:     "zyi.featureTesting",
+		ClientID:     clientId,
 		ClientSecret: clientSecret,
 		Code:         code,
 	}

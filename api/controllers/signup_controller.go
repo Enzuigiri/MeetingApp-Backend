@@ -29,7 +29,7 @@ func (sc *SignupController) Signup(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")
 	}
 
-	user, err := sc.SignupUsecase.CodeValidation(c.Context(), sc.Env.ClientSecret, request.ValidateCode)
+	user, err := sc.SignupUsecase.CodeValidation(c.Context(), sc.Env.ClientID, sc.Env.ClientSecret, request.ValidateCode)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}

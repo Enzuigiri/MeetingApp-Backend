@@ -19,7 +19,7 @@ type SignupUsecase interface {
 	Create(c context.Context, user *User) error
 	GetByAppleID(c context.Context, id string) (User, error)
 	GetByEmail(c context.Context, email string) (User, error)
-	CodeValidation(c context.Context, clientSecret string, code string) (User, error)
+	CodeValidation(c context.Context, clientId string, clientSecret string, code string) (User, error)
 	CreateAccessToken(user *User, secret string, expiry int) (accessToken string, err error)
 	CreateRefreshToken(user *User, secret string, expiry int) (refreshToken string, err error)
 }

@@ -20,6 +20,7 @@ type Env struct {
 	AccessTokenSecret      string `mapstructure:"ACCESS_TOKEN_SECRET"`
 	RefreshTokenSecret     string `mapstructure:"REFRESH_TOKEN_SECRET"`
 	ClientSecret           string `mapstructure:"CLIENT_SECRET"`
+	ClientID               string `mapstructure:"CLIENT_ID"`
 }
 
 func NewEnv() *Env {
