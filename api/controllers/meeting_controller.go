@@ -34,6 +34,12 @@ func (mc *MeetingController) Create(c *fiber.Ctx) error {
 	request.PICID.UserID = userIdHex
 	request.PICID.FirstName = user.FirstName
 
+	for i, _ := range request.Agenda {
+		request.Agenda[i].ID = primitive.NewObjectID()
+		request.Agenda[i].ProposerID = userIdHex
+		request.Agenda[i].FirstName = user.FirstName
+	}
+
 	err = mc.Validator.Struct(request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")

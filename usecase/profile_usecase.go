@@ -30,6 +30,7 @@ func (pu *profileUsecase) GetProfileByID(c context.Context, id string) (domain.P
 		return userProfile, err
 	}
 
+	userProfile.ID = id
 	userProfile.Email = userData.Email
 	userProfile.FirstName = userData.FirstName
 	userProfile.LastName = userData.LastName

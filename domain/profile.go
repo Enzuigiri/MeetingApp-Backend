@@ -3,6 +3,7 @@ package domain
 import "context"
 
 type Profile struct {
+	ID        string `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Email     string `json:"email"`
