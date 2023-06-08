@@ -19,9 +19,11 @@ type MeetingController struct {
 func (mc *MeetingController) Create(c *fiber.Ctx) error {
 	user := c.Locals("user").(domain.JWTUserData)
 
-	var request *domain.Meeting
+	var request domain.Meeting
 
-	err := c.BodyParser(request)
+	print(c.Body())
+
+	err := c.BodyParser(&request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
@@ -48,7 +50,7 @@ func (mc *MeetingController) Create(c *fiber.Ctx) error {
 	request.ID = primitive.NewObjectID()
 	request.CreatedAt = time.Now()
 
-	err = mc.MeetingUsecase.Create(c.Context(), request)
+	err = mc.MeetingUsecase.Create(c.Context(), &request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
