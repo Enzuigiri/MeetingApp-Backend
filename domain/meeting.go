@@ -12,9 +12,9 @@ const (
 )
 
 type MeetingTime struct {
-	Date      time.Time `bson:"date" json:"date" validate:"required,datetime"`
-	StartTime time.Time `bson:"startTime" json:"startTime" validate:"required,datetime"`
-	EndTime   time.Time `bson:"endTime" json:"endTime" validate:"required,datetime"`
+	Date      time.Time `bson:"date" json:"date" validate:"required"`
+	StartTime time.Time `bson:"startTime" json:"startTime" validate:"required"`
+	EndTime   time.Time `bson:"endTime" json:"endTime" validate:"required"`
 }
 
 type PICID struct {
@@ -23,7 +23,7 @@ type PICID struct {
 }
 
 type Meeting struct {
-	ID           primitive.ObjectID `bson:"_id,omitempty" json:"meetId"`
+	ID           primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Title        string             `bson:"title" json:"title" validate:"required"`
 	Desription   string             `bson:"description" json:"description" validate:"required"`
 	PICID        PICID              `bson:"picid" json:"picid" validate:"required"`
