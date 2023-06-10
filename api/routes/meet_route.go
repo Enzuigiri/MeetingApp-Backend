@@ -22,7 +22,7 @@ func NewMeetingRoute(env *app.Env, timeout time.Duration, db mongo.Database, gro
 	}
 
 	group.Post("/meeting", mc.Create)
-	group.Post("/meeting/id", mc.FetchByID)
+	group.Get("/meeting", mc.FetchByID)
 	group.Get("/user/meetings", mc.FetchByUserID)
 	group.Put("/meeting", mc.Update)
 	group.Delete("/meeting", mc.Delete)

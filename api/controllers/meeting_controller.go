@@ -65,7 +65,7 @@ func (mc *MeetingController) FetchByID(c *fiber.Ctx) error {
 
 	var request domain.FetchMeetingRequest
 
-	err := c.BodyParser(request)
+	err := c.BodyParser(&request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
@@ -109,7 +109,7 @@ func (mc *MeetingController) Update(c *fiber.Ctx) error {
 	user := c.Locals("user").(domain.JWTUserData)
 
 	var request domain.UpdateMeetingRequest
-	err := c.BodyParser(request)
+	err := c.BodyParser(&request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
@@ -145,7 +145,7 @@ func (mc *MeetingController) Delete(c *fiber.Ctx) error {
 	user := c.Locals("user").(domain.JWTUserData)
 
 	var request domain.FetchMeetingRequest
-	err := c.BodyParser(request)
+	err := c.BodyParser(&request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
