@@ -106,6 +106,7 @@ func (au *agendaUsecase) Delete(c context.Context,
 	defer cancel()
 
 	isValid := false
+
 	proposerIdHex, err := primitive.ObjectIDFromHex(propeserId)
 	if err != nil {
 		return domain.Meeting{}, err

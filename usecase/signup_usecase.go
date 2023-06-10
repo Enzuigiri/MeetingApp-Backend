@@ -69,7 +69,6 @@ func (su *signupUsecase) CodeValidation(c context.Context, clientId string, clie
 	user.Email = (*claim)["email"].(string)
 
 	return user, nil
-
 }
 
 func (su *signupUsecase) GetByEmail(c context.Context, email string) (domain.User, error) {

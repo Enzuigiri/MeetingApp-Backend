@@ -14,7 +14,7 @@ type ParticipantController struct {
 	MeetingUsecase    domain.MeetingUsecase
 	ParticpantUsecase domain.ParticipantUsecase
 	Env               *app.Env
-	Validattor        validator.Validate
+	Validator         validator.Validate
 }
 
 func (pc *ParticipantController) Join(c *fiber.Ctx) error {

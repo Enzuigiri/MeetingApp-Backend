@@ -19,4 +19,6 @@ func Setup(env *app.Env, timeout time.Duration, db mongo.Database, fiber *fiber.
 
 	NewProfileRouter(env, timeout, db, protectedRouter, validator)
 	NewMeetingRoute(env, timeout, db, protectedRouter, validator)
+	NewParticipantRoute(env, timeout, db, protectedRouter, validator)
+	NewAgendaRoute(env, timeout, db, protectedRouter, validator)
 }

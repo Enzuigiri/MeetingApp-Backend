@@ -34,6 +34,7 @@ func (mc *MeetingController) Create(c *fiber.Ctx) error {
 
 	request.PICID.UserID = userIdHex
 	request.PICID.FirstName = user.FirstName
+	request.Participants = []domain.Participant{}
 
 	for i := range request.Agenda {
 		request.Agenda[i].ID = primitive.NewObjectID()
