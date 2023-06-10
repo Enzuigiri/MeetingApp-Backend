@@ -34,7 +34,12 @@ func (mr *meetingRepository) FetchByID(c context.Context, id string) (domain.Mee
 
 	var meeting domain.Meeting
 
-	err := collection.FindOne(c, bson.M{"_id": id}).Decode(&meeting)
+	meetId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return meeting, err
+	}
+
+	err = collection.FindOne(c, bson.M{"_id": meetId}).Decode(&meeting)
 
 	return meeting, err
 }
