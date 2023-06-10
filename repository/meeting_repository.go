@@ -66,7 +66,7 @@ func (mr *meetingRepository) FetchByUserID(c context.Context, id string) ([]doma
 
 	filter := bson.M{
 		"$or": bson.A{
-			bson.M{"picid": bson.M{"userID": idHex}},
+			bson.M{"picid.userID": idHex},
 			bson.M{"participants": bson.M{"$elemMatch": bson.M{"userID": idHex}}},
 		},
 	}
