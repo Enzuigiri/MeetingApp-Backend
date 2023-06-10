@@ -94,7 +94,7 @@ func (mc *MeetingController) FetchByUserID(c *fiber.Ctx) error {
 
 	for _, meeting := range meetings {
 		response = append(response, domain.FetchAllUserMeetingResponse{
-			ID:           meeting.ID.String(),
+			ID:           meeting.ID.Hex(),
 			Title:        meeting.Title,
 			Location:     meeting.Location,
 			Schedule:     meeting.Schedule,
