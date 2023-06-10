@@ -13,8 +13,17 @@ type Participant struct {
 	JoinTime  time.Time          `bson:"joinTime"`
 }
 
+type JoinRequest struct {
+	MeetingCode string `json:"meetingCode" validate:"required"`
+}
+
+type RemoveRequest struct {
+	MeetingId string `json:"meetingId" validate:"required"`
+	UserId    string `json:"userId"`
+}
+
 type ParticipantUsecase interface {
-	CheckUserId(c context.Context, userId string, meetingId string) (Meeting, error)
-	Add(c context.Context, userId string, meetingId string) error
-	Delete(c context.Context, userId string, meetingId string) error
+	CheckMeetingByCode(c context.Context, meetingCode string) (Meeting, error)
+	Add(c context.Context, participant *Participant, meeting *Meeting) (Meeting, error)
+	Delete(c context.Context, meeting *Meeting, userId string) (Meeting, error)
 }

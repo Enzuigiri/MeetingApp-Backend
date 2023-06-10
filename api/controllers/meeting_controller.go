@@ -3,6 +3,7 @@ package controllers
 import (
 	"backend/app"
 	"backend/domain"
+	"fmt"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -21,8 +22,6 @@ func (mc *MeetingController) Create(c *fiber.Ctx) error {
 
 	var request domain.Meeting
 
-	print(c.Body())
-
 	err := c.BodyParser(&request)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
@@ -36,10 +35,12 @@ func (mc *MeetingController) Create(c *fiber.Ctx) error {
 	request.PICID.UserID = userIdHex
 	request.PICID.FirstName = user.FirstName
 
-	for i, _ := range request.Agenda {
+	for i := range request.Agenda {
 		request.Agenda[i].ID = primitive.NewObjectID()
 		request.Agenda[i].ProposerID = userIdHex
 		request.Agenda[i].FirstName = user.FirstName
+		request.Agenda[i].Voters = []domain.Voter{}
+		request.Agenda[i].CreatedAt = time.Now()
 	}
 
 	err = mc.Validator.Struct(request)
@@ -73,7 +74,7 @@ func (mc *MeetingController) FetchByID(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")
 	}
 
-	meeting, err := mc.MeetingUsecase.FetchByID(c.Context(), user.ID, request.ID)
+	meeting, _, err := mc.MeetingUsecase.FetchByID(c.Context(), user.ID, request.ID)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -117,8 +118,11 @@ func (mc *MeetingController) Update(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	meeting, err := mc.MeetingUsecase.FetchByID(c.Context(), user.ID, request.ID)
-	if err != nil {
+	meeting, isPIC, err := mc.MeetingUsecase.FetchByID(c.Context(), user.ID, request.ID)
+	if err != nil || !isPIC {
+		if !isPIC {
+			err = fmt.Errorf("Not Authorized")
+		}
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 

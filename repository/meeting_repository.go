@@ -39,6 +39,16 @@ func (mr *meetingRepository) FetchByID(c context.Context, id string) (domain.Mee
 	return meeting, err
 }
 
+func (mr *meetingRepository) FetchByCode(c context.Context, code string) (domain.Meeting, error) {
+	collection := mr.database.Collection(mr.collection)
+
+	var meeting domain.Meeting
+
+	err := collection.FindOne(c, bson.M{"code": code}).Decode(&meeting)
+
+	return meeting, err
+}
+
 func (mr *meetingRepository) FetchByUserID(c context.Context, id string) ([]domain.Meeting, error) {
 	collection := mr.database.Collection(mr.collection)
 

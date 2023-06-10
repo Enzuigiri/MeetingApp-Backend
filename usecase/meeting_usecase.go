@@ -31,31 +31,31 @@ func (mu *meetingUsecase) Create(c context.Context, meeting *domain.Meeting) err
 	return mu.meetingRepository.Create(ctx, meeting)
 }
 
-func (mu *meetingUsecase) FetchByID(c context.Context, userId string, meetId string) (domain.Meeting, error) {
+func (mu *meetingUsecase) FetchByID(c context.Context, userId string, meetId string) (domain.Meeting, bool, error) {
 	ctx, cancel := context.WithTimeout(c, mu.contextTimeout)
 	defer cancel()
 
 	meeting, err := mu.meetingRepository.FetchByID(ctx, meetId)
 	if err != nil {
-		return meeting, err
+		return meeting, false, err
 	}
 
 	userIdHex, err := primitive.ObjectIDFromHex(userId)
 	if err != nil {
-		return meeting, err
+		return meeting, false, err
 	}
 
 	if meeting.PICID.UserID == userIdHex {
-		return meeting, err
+		return meeting, true, err
 	}
 
 	for _, user := range meeting.Participants {
 		if user.UserID == userIdHex {
-			return meeting, err
+			return meeting, false, err
 		}
 	}
 
-	return meeting, fmt.Errorf("Not authorized to view this meeting")
+	return meeting, false, fmt.Errorf("Not authorized to view this meeting")
 }
 
 func (mu *meetingUsecase) FetchByUserID(c context.Context, id string) ([]domain.Meeting, error) {

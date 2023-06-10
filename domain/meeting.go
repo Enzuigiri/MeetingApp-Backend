@@ -62,13 +62,14 @@ type MeetingRepository interface {
 	Create(c context.Context, meeting *Meeting) error
 	FetchByID(c context.Context, id string) (Meeting, error)
 	FetchByUserID(c context.Context, id string) ([]Meeting, error)
+	FetchByCode(c context.Context, code string) (Meeting, error)
 	Update(c context.Context, meeting *Meeting) (Meeting, error)
 	Delete(c context.Context, userId string, meetId string) error
 }
 
 type MeetingUsecase interface {
 	Create(c context.Context, meeting *Meeting) error
-	FetchByID(c context.Context, userId string, meetId string) (Meeting, error)
+	FetchByID(c context.Context, userId string, meetId string) (Meeting, bool, error)
 	FetchByUserID(c context.Context, id string) ([]Meeting, error)
 	Update(c context.Context, meeting *Meeting) (Meeting, error)
 	Delete(c context.Context, userId string, meetId string) error
