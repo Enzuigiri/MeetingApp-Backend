@@ -33,6 +33,12 @@ func (pu *participantUsecase) Add(c context.Context,
 	ctx, cancel := context.WithTimeout(c, pu.contextTimeout)
 	defer cancel()
 
+	for _, meetParticipant := range meeting.Participants {
+		if meetParticipant.UserID == participant.UserID {
+			return *meeting, nil
+		}
+	}
+
 	meeting.Participants = append(meeting.Participants, *participant)
 	return pu.meetingRepository.Update(ctx, meeting)
 }
