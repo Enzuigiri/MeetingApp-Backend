@@ -8,9 +8,9 @@ import (
 )
 
 type Participant struct {
-	UserID    primitive.ObjectID `bson:"userID"`
-	FirstName string             `bson:"firstName"`
-	JoinTime  time.Time          `bson:"joinTime"`
+	UserID    primitive.ObjectID `bson:"userID" json:"userId"`
+	FirstName string             `bson:"firstName" json:"firstName"`
+	JoinTime  time.Time          `bson:"joinTime" json:"joinTime"`
 }
 
 type JoinRequest struct {
