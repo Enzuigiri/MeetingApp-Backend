@@ -44,7 +44,7 @@ func (ur *userRepository) GetByAppleID(c context.Context, id string) (domain.Use
 
 	var user domain.User
 
-	err := collection.FindOne(c, bson.M{"appleid": id}).Decode(&user)
+	err := collection.FindOne(c, bson.M{"appleID": id}).Decode(&user)
 
 	return user, err
 }
@@ -62,4 +62,18 @@ func (ur *userRepository) GetById(c context.Context, id string) (domain.User, er
 	err = collection.FindOne(c, bson.M{"_id": idHex}).Decode(&user)
 
 	return user, err
+}
+
+func (ur *userRepository) Update(c context.Context, user *domain.User) (domain.User, error) {
+	collection := ur.database.Collection(ur.collection)
+
+	filter := bson.M{"_id": user.ID}
+
+	update := bson.M{"$set": user}
+
+	var result domain.User
+
+	err := collection.FindOneAndUpdate(c, filter, update).Decode(result)
+
+	return result, err
 }

@@ -90,3 +90,9 @@ func (su *signupUsecase) CreateAccessToken(user *domain.User, secret string, exp
 func (su *signupUsecase) CreateRefreshToken(user *domain.User, secret string, expiry int) (refreshToken string, err error) {
 	return utils.CreateRefreshToken(user, secret, expiry)
 }
+
+func (su *signupUsecase) Update(c context.Context, user *domain.User) (domain.User, error) {
+	ctx, cancel := context.WithTimeout(c, su.contextTimeout)
+	defer cancel()
+	return su.userRepository.Update(ctx, user)
+}

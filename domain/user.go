@@ -28,4 +28,5 @@ type UserRepository interface {
 	GetById(c context.Context, id string) (User, error)
 	GetByEmail(c context.Context, email string) (User, error)
 	GetByAppleID(c context.Context, id string) (User, error)
+	Update(c context.Context, user *User) (User, error)
 }

@@ -42,7 +42,7 @@ func (sc *SignupController) Signup(c *fiber.Ctx) error {
 	userDataByEmail, errCheck := sc.SignupUsecase.GetByAppleID(c.Context(), user.AppleID)
 
 	// Fix This No LOgic Shouldn't Perform in This Layer
-	if userDataByEmail.Email != "" {
+	if userDataByEmail.AppleID != "" {
 		user = userDataByEmail
 	}
 
@@ -52,12 +52,16 @@ func (sc *SignupController) Signup(c *fiber.Ctx) error {
 	}
 
 	if errCheck != nil {
-		err = nil
 
 		user.RefreshToken = refreshToken
 		user.CreatedAt = time.Now()
 
 		sc.SignupUsecase.Create(c.Context(), &user)
+	} else {
+		user.RefreshToken = refreshToken
+		user.CreatedAt = time.Now()
+
+		sc.SignupUsecase.Update(c.Context(), &user)
 	}
 
 	accessToken, err := sc.SignupUsecase.CreateAccessToken(&user, sc.Env.AccessTokenSecret, sc.Env.AccessTokenExpiryHour)
