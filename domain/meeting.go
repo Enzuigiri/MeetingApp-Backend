@@ -44,6 +44,7 @@ type FetchAllUserMeetingResponse struct {
 	ID           string        `json:"meetId"`
 	Title        string        `json:"title"`
 	Location     string        `json:"location"`
+	PICID        PICID         `json:"picid"`
 	Schedule     MeetingTime   `json:"schedule"`
 	VoteTime     MeetingTime   `json:"voteTime"`
 	Participants []Participant `json:"participants"`

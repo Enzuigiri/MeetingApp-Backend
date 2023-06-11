@@ -97,6 +97,7 @@ func (mc *MeetingController) FetchByUserID(c *fiber.Ctx) error {
 			ID:           meeting.ID.Hex(),
 			Title:        meeting.Title,
 			Location:     meeting.Location,
+			PICID:        meeting.PICID,
 			Schedule:     meeting.Schedule,
 			VoteTime:     meeting.VoteTime,
 			Participants: meeting.Participants,
