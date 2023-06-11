@@ -37,6 +37,10 @@ func (pc *ParticipantController) Join(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
+	if meeting.PICID.UserID == userIdHex {
+		return c.Status(fiber.StatusOK).JSON(meeting)
+	}
+
 	participant := domain.Participant{
 		UserID:    userIdHex,
 		FirstName: user.FirstName,
