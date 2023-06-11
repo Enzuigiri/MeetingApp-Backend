@@ -91,11 +91,9 @@ func (mr *meetingRepository) Update(c context.Context, meeting *domain.Meeting) 
 
 	update := bson.M{"$set": meeting}
 
-	var result domain.Meeting
+	err := collection.FindOneAndUpdate(c, filter, update).Err()
 
-	err := collection.FindOneAndUpdate(c, filter, update).Decode(&result)
-
-	return result, err
+	return *meeting, err
 }
 
 func (mr *meetingRepository) Delete(c context.Context, userId string, meetId string) error {
