@@ -22,4 +22,5 @@ type SignupUsecase interface {
 	CodeValidation(c context.Context, clientId string, clientSecret string, code string) (User, error)
 	CreateAccessToken(user *User, secret string, expiry int) (accessToken string, err error)
 	CreateRefreshToken(user *User, secret string, expiry int) (refreshToken string, err error)
+	Update(c context.Context, user *User) (User, error)
 }
