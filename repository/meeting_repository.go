@@ -93,7 +93,7 @@ func (mr *meetingRepository) Update(c context.Context, meeting *domain.Meeting) 
 
 	var result domain.Meeting
 
-	err := collection.FindOneAndUpdate(c, filter, update).Decode(result)
+	err := collection.FindOneAndUpdate(c, filter, update).Decode(&result)
 
 	return result, err
 }
