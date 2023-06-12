@@ -139,7 +139,7 @@ func (au *agendaUsecase) Vote(c context.Context,
 	ctx, cancel := context.WithTimeout(c, au.contextTimeout)
 	defer cancel()
 
-	tempVoter := voter
+	tempVoter := *voter
 	var result float64 = 0.0
 
 	if len(votes) != len(meeting.Agenda) {
@@ -148,7 +148,7 @@ func (au *agendaUsecase) Vote(c context.Context,
 
 	for i := 0; i < len(meeting.Agenda); i++ {
 		tempVoter.Value = votes[i]
-		meeting.Agenda[i].Voters = append(meeting.Agenda[i].Voters, *tempVoter)
+		meeting.Agenda[i].Voters = append(meeting.Agenda[i].Voters, tempVoter)
 	}
 
 	for i, agenda := range meeting.Agenda {
