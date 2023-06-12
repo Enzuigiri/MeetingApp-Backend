@@ -44,10 +44,10 @@ func (mc *MeetingController) Create(c *fiber.Ctx) error {
 		request.Agenda[i].CreatedAt = time.Now()
 	}
 
-	err = mc.Validator.Struct(request)
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")
-	}
+	// err = mc.Validator.Struct(request)
+	// if err != nil {
+	// 	return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")
+	// }
 
 	request.ID = primitive.NewObjectID()
 	request.CreatedAt = time.Now()

@@ -142,6 +142,12 @@ func (au *agendaUsecase) Vote(c context.Context,
 	tempVoter := *voter
 	var result float64 = 0.0
 
+	for _, voter := range meeting.Agenda[0].Voters {
+		if voter.UserId == voter.UserId {
+			return *meeting, fmt.Errorf("You already vote")
+		}
+	}
+
 	if len(votes) != len(meeting.Agenda) {
 		return *meeting, fmt.Errorf("There's still some agendas that you havent vote or over vote")
 	}
