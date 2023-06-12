@@ -32,7 +32,7 @@ type Meeting struct {
 	Schedule     MeetingTime        `bson:"schedule" json:"schedule" validate:"required"`
 	VoteTime     MeetingTime        `bson:"voteTime" json:"voteTime" validate:"required"`
 	Participants []Participant      `bson:"participants" json:"participants"`
-	Agenda       []Agenda           `bson:"agenda" json:"agenda" validate:"required"`
+	Agenda       []Agenda           `bson:"agenda" json:"agenda"`
 	CreatedAt    time.Time          `bson:"createdAt"`
 }
 
