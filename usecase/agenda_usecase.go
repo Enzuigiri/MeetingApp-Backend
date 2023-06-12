@@ -140,7 +140,7 @@ func (au *agendaUsecase) Vote(c context.Context,
 	defer cancel()
 
 	tempVoter := *voter
-	var result float64 = 0.0
+	var result float64
 
 	for _, voter := range meeting.Agenda[0].Voters {
 		if voter.UserId == voter.UserId {
@@ -161,7 +161,7 @@ func (au *agendaUsecase) Vote(c context.Context,
 		for _, agendaVoter := range agenda.Voters {
 			result += float64(agendaVoter.Value)
 		}
-		meeting.Agenda[i].Result = result / float64(len(agenda.Voters)) * 4
+		meeting.Agenda[i].Result = result / float64(len(agenda.Voters)*4)
 		result = 0.0
 	}
 

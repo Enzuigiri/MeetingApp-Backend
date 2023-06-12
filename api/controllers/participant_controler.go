@@ -47,15 +47,6 @@ func (pc *ParticipantController) Join(c *fiber.Ctx) error {
 		JoinTime:  time.Now(),
 	}
 
-	var result float64
-	for i, agenda := range meeting.Agenda {
-		for _, agendaVoter := range agenda.Voters {
-			result += float64(agendaVoter.Value)
-		}
-		meeting.Agenda[i].Result = result / float64(len(agenda.Voters)*4)
-		result = 0.0
-	}
-
 	response, err := pc.ParticpantUsecase.Add(c.Context(), &participant, &meeting)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
