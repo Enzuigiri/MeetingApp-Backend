@@ -140,10 +140,19 @@ func (au *agendaUsecase) Vote(c context.Context,
 	defer cancel()
 
 	tempVoter := voter
+	var result float64 = 0.0
 
 	for i := 0; i < len(meeting.Agenda); i++ {
 		tempVoter.Value = votes[i]
 		meeting.Agenda[i].Voters = append(meeting.Agenda[i].Voters, *tempVoter)
+	}
+
+	for i, agenda := range meeting.Agenda {
+		for _, agendaVoter := range agenda.Voters {
+			result += float64(agendaVoter.Value)
+		}
+		meeting.Agenda[i].Result = result / float64(len(agenda.Voters)) * 4
+		result = 0.0
 	}
 
 	return au.meetingRepository.Update(ctx, meeting)
