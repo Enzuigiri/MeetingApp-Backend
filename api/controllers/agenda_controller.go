@@ -105,6 +105,11 @@ func (ac *AgendaController) Vote(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
+	err = ac.Validator.Struct(request)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")
+	}
+
 	meeting, _, err := ac.MeetingUsecase.FetchByID(c.Context(), user.ID, request.MeetingId)
 	if err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
