@@ -142,6 +142,10 @@ func (au *agendaUsecase) Vote(c context.Context,
 	tempVoter := voter
 	var result float64 = 0.0
 
+	if len(votes) != len(meeting.Agenda) {
+		return *meeting, fmt.Errorf("There's still some agendas that you havent vote or over vote")
+	}
+
 	for i := 0; i < len(meeting.Agenda); i++ {
 		tempVoter.Value = votes[i]
 		meeting.Agenda[i].Voters = append(meeting.Agenda[i].Voters, *tempVoter)
