@@ -120,12 +120,12 @@ func (ac *AgendaController) Vote(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	var voter *domain.Voter
+	var voter domain.Voter
 
 	voter.UserId = voterId
 	voter.FirstName = user.FirstName
 
-	response, err := ac.AgendaUsecase.Vote(c.Context(), &meeting, request.VoteValue, voter)
+	response, err := ac.AgendaUsecase.Vote(c.Context(), &meeting, request.VoteValue, &voter)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
