@@ -167,3 +167,28 @@ func (au *agendaUsecase) Vote(c context.Context,
 
 	return au.meetingRepository.Update(ctx, meeting)
 }
+
+func (au *agendaUsecase) ResultChange(c context.Context,
+	meeting *domain.Meeting, agendasId []string) (domain.Meeting, error) {
+	ctx, cancel := context.WithTimeout(c, au.contextTimeout)
+	defer cancel()
+
+	var tempAgendas []domain.Agenda
+
+	for _, agendaId := range agendasId {
+		for _, agenda := range meeting.Agenda {
+			if agendaId == agenda.ID.Hex() {
+				tempAgendas = append(tempAgendas, agenda)
+				break
+			}
+		}
+	}
+
+	if len(tempAgendas) != len(meeting.Agenda) {
+		return *meeting, fmt.Errorf("There's still some agendas id that missing")
+	}
+
+	meeting.Agenda = tempAgendas
+
+	return au.meetingRepository.Update(ctx, meeting)
+}

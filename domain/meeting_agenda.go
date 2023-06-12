@@ -52,9 +52,15 @@ type AgendaVote struct {
 	VoteValue []int  `json:"voteValue" validate:"required"`
 }
 
+type ResultAgendaChangesRequest struct {
+	MeetingId string   `json:"meetId" validate:"required"`
+	AgendasId []string `json:"agendasId" validate:"required"`
+}
+
 type AgendaUsecase interface {
 	Add(c context.Context, meeting *Meeting, agenda *[]AgendaRequest, proposerId string, firstName string) (Meeting, error)
 	Delete(c context.Context, meeting *Meeting, agendaId string, propeserId string) (Meeting, error)
 	Edit(c context.Context, meeting *Meeting, agenda *Agenda, proposerId string) (Meeting, error)
 	Vote(c context.Context, meeting *Meeting, votes []int, voter *Voter) (Meeting, error)
+	ResultChange(c context.Context, meeting *Meeting, agendasId []string) (Meeting, error)
 }

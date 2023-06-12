@@ -24,6 +24,7 @@ func NewAgendaRoute(env *app.Env, timeout time.Duration,
 	}
 
 	group.Post("/meeting/agenda", ac.Add)
+	group.Post("/meeting/agenda/result", ac.SaveResult)
 	group.Delete("/meeting/agenda", ac.Delete)
 	group.Post("/meeting/vote", ac.Vote)
 }

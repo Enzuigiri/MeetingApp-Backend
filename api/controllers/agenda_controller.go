@@ -132,3 +132,35 @@ func (ac *AgendaController) Vote(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(response)
 }
+
+func (ac *AgendaController) SaveResult(c *fiber.Ctx) error {
+	user := c.Locals("user").(domain.JWTUserData)
+
+	var request domain.ResultAgendaChangesRequest
+
+	err := c.BodyParser(&request)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	err = ac.Validator.Struct(request)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "Missing tag or value that required")
+	}
+
+	meeting, isPIC, err := ac.MeetingUsecase.FetchByID(c.Context(), user.ID, request.MeetingId)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	if !isPIC {
+		return fiber.NewError(fiber.StatusBadRequest, "Not Authorized to do this")
+	}
+
+	response, err := ac.AgendaUsecase.ResultChange(c.Context(), &meeting, request.AgendasId)
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(response)
+}
